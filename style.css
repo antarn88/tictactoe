@@ -1,0 +1,31 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+body {
+	background-color: rgba(0, 0, 0, .1);
+}
+.cell-container {
+	margin: 10rem auto;
+	border-radius: .5rem;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+	background-color: rgb(30, 144, 255);
+	width: 20rem;
+	height: 20rem;
+	overflow: hidden;
+	color: rgb(255, 255, 255);
+	font-size: 1.2rem;
+}
+.column0, .column1, .column2 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid rgba(255, 255, 255, .4);
+	width: 6.66rem;
+	height: 6.66rem;
+	user-select: none;
+}
+.line0, .line1, .line2 {
+	display: flex;
+}
