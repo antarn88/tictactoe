@@ -1,7 +1,18 @@
+const newGameBtn = document.querySelector(".new-game-btn");
 const cells = document.querySelectorAll("[id^=cell]");
 const cellsArray = Array.from(cells);
-const freeIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const gameOverPanel = document.querySelector(".game-over");
+let freeIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let freeIndexesFiltered = [];
+
+newGameBtn.addEventListener("click", () => {
+    cellsArray.forEach((item) => {
+        item.textContent = "";
+    });
+    freeIndexesFiltered = [];
+    freeIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    gameOverPanel.style.display = "none";
+});
 
 const randomChoice = {
     choices: [0, 1, 2, 3, 4, 5, 6, 7, 8],
@@ -16,13 +27,13 @@ const randomChoice = {
     choice: function (choice = null, cellsArray = null) {
         if (choice !== null && cellsArray === null) {
             this.choices[choice] = null;
-            this.filteredChoices = this.choices.filter(item => item);
+            this.filteredChoices = this.choices.filter(item => typeof item === "number");
         } else {
             let randomNumber = this.getRandomNumber();
             this.choices[randomNumber] = null;
-            this.filteredChoices = this.choices.filter(item => item);
+            this.filteredChoices = this.choices.filter(item => typeof item === "number");
             freeIndexes[randomNumber] = null;
-            freeIndexesFiltered = freeIndexes.filter(item => item);
+            freeIndexesFiltered = freeIndexes.filter(item => typeof item === "number");
             return randomNumber;
         }
     }
@@ -33,13 +44,15 @@ cellsArray.map((item, index) => {
         if (item.textContent !== "X" && item.textContent !== "0") {
             item.textContent = "X";
             freeIndexes[index] = null;
-            freeIndexesFiltered = freeIndexes.filter(item => item);
+            freeIndexesFiltered = freeIndexes.filter(item => typeof item === "number");
             randomChoice.choice(index);
             let freePosition = randomChoice.choice(null, cellsArray);
             if (freeIndexesFiltered.length >= 1) {
                 cellsArray[freePosition].textContent = "0";
-                console.log("Gépi lépés cellaszáma: " + freePosition);
             }
+        }
+        if (cellsArray.every(item => item.textContent == "X" || item.textContent == "0")) {
+            gameOverPanel.style.display = "block";
         }
     });
 });

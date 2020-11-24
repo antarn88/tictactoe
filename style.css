@@ -7,7 +7,7 @@ body {
 	background-color: rgba(0, 0, 0, .1);
 }
 .cell-container {
-	margin: 10rem auto;
+	margin: 5rem auto;
 	border-radius: .5rem;
 	box-shadow: 0 0 8px rgba(0, 0, 0, .5);
 	background-color: rgb(30, 144, 255);
@@ -28,4 +28,13 @@ body {
 }
 .line0, .line1, .line2 {
 	display: flex;
+}
+.game-over {
+	display: none;
+	text-align: center;
+	color: green;
+}
+.game-over button {
+	margin-top: 1rem;
+	padding: .3rem;
 }
