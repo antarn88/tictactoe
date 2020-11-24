@@ -1,7 +1,15 @@
+const cellContainer = document.querySelector(".cell-container");
 const newGameBtn = document.querySelector(".new-game-btn");
 const cells = document.querySelectorAll("[id^=cell]");
 const cellsArray = Array.from(cells);
 const gameOverPanel = document.querySelector(".game-over");
+const gameOverPanelText = document.querySelector(".game-over h1");
+const lines = Array.from(document.querySelectorAll("[class^=line]"));
+const column0 = Array.from(document.querySelectorAll(".column0"));
+const column1 = Array.from(document.querySelectorAll(".column1"));
+const column2 = Array.from(document.querySelectorAll(".column2"));
+
+
 let freeIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let freeIndexesFiltered = [];
 
@@ -12,6 +20,7 @@ newGameBtn.addEventListener("click", () => {
     freeIndexesFiltered = [];
     freeIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     gameOverPanel.style.display = "none";
+    cellContainer.style.pointerEvents = "unset";
 });
 
 const randomChoice = {
@@ -39,6 +48,30 @@ const randomChoice = {
     }
 }
 
+
+const linesAction = (item, index) => {
+    let numersOfX = Array.from(item.textContent).filter(item => item === "X");
+        let numersOf0 = Array.from(item.textContent).filter(item => item === "0");
+        if (numersOfX.length === 3) {
+            gameOverPanel.style.display = "block";
+            gameOverPanelText.textContent = "Győztél! :)";
+            cellContainer.style.pointerEvents = "none";
+        }
+        if (numersOf0.length === 3) {
+            gameOverPanel.style.display = "block";
+            gameOverPanelText.textContent = "Vesztettél! :(";
+            cellContainer.style.pointerEvents = "none";
+        }
+};
+
+
+const winCheck = () => {
+    lines.forEach((item, index) => {
+        linesAction(item, index);
+    });
+};
+
+
 cellsArray.map((item, index) => {
     item.addEventListener("click", function () {
         if (item.textContent !== "X" && item.textContent !== "0") {
@@ -50,9 +83,13 @@ cellsArray.map((item, index) => {
             if (freeIndexesFiltered.length >= 1) {
                 cellsArray[freePosition].textContent = "0";
             }
+
+            winCheck();
         }
         if (cellsArray.every(item => item.textContent == "X" || item.textContent == "0")) {
             gameOverPanel.style.display = "block";
+            gameOverPanelText.textContent = "Vége a játéknak!";
+            cellContainer.style.pointerEvents = "none";
         }
     });
 });

@@ -32,7 +32,6 @@ body {
 .game-over {
 	display: none;
 	text-align: center;
-	color: green;
 }
 .game-over button {
 	margin-top: 1rem;
